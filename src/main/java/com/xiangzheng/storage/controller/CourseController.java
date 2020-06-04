@@ -1,7 +1,6 @@
 package com.xiangzheng.storage.controller;
 
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.xiangzheng.storage.service.CourseService;
 import com.xiangzheng.storage.tools.ResponseAPI;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class CourseController {
 
     @RequestMapping("/")
     public ResponseAPI selectCourse(){
-        return new ResponseAPI(ResponseAPI.SUCCESS_CODE,ResponseAPI.SUCCESS_FLAG,"查询成功",courseService.selectList(new EntityWrapper<>()));
+        return new ResponseAPI(ResponseAPI.SUCCESS_CODE,ResponseAPI.SUCCESS_FLAG,"查询成功",courseService.findAll());
     }
 
 }

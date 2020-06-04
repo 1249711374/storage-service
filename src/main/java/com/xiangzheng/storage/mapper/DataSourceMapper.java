@@ -14,7 +14,7 @@ import java.util.List;
 @Mapper
 public interface DataSourceMapper {
 
-    @Select("SELECT * FROM databasetype")
+    @Select("SELECT datasourceId,url,user_name userName,pass_word passWord,code,databasetype FROM databasetype")
     List<DataSource> get();
 
 

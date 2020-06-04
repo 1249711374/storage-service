@@ -2,6 +2,7 @@ package com.xiangzheng.storage.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Created with IDEA
@@ -12,6 +13,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+
 public class User {
     String userName;
     String age;
