@@ -6,15 +6,14 @@ spring:
     #新版mysql驱动配置方法
     driver-class-name: com.mysql.jdbc.Driver
     #nullCatalogMeansCurrent=true&
-    url: jdbc:mysql://127.0.0.1:3306/master_tenant?characterEncoding=utf8&useSSL=false&serverTimezone=Hongkong&allowPublicKeyRetrieval=true
-    #    driver-class-name: com.mysql.jdbc.Driver
-    #    url: jdbc:mysql://192.168.1.111:3306/sfms
+    url: jdbc:mysql://127.0.0.1:3306/master_tenant?user=root&password=root&characterEncoding=utf8&useSSL=false&serverTimezone=Hongkong&allowPublicKeyRetrieval=true
     username: root
     password: root
     ###################以上主数据源配置#####################
     driverClassName: com.mysql.jdbc.Driver
     ###################以下为druid增加的配置###########################
     type: com.alibaba.druid.pool.DruidDataSource
+
     # 下面为连接池的补充设置，应用到上面所有数据源中
     # 初始化大小，最小，最大
     initialSize: 5
@@ -39,17 +38,13 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
     # 合并多个DruidDataSource的监控数据
     useGlobalDataSourceStat: true
-    ###############以上为配置druid添加的配置########################################
-#    type: com.zaxxer.hikari.HikariDataSource
-#    hikari:
-#      minimum-idle: 5
-#      maximum-pool-size: 15
-#      auto-commit: true
-#      idle-timeout: 30000
-#      pool-name: DatebookHikariCP
-#      max-lifetime: 1800000
-#      connection-timeout: 30000
-#      connection-test-query: SELECT 1
+#    ###############以上为配置druid添加的配置########################################
+
+#
+#mybatis:
+#  type-aliases-package: com.zhou.datasource.model  #扫描包路径
+#  configuration:
+#    map-underscore-to-camel-case: true
 
 mybatis-plus:
   type-aliases-package: com.zhou.datasource.model  #扫描包路径
@@ -57,4 +52,3 @@ mybatis-plus:
     map-underscore-to-camel-case: true
   mapper-locations: classpath*:/mapper/*.xml
   #    map-underscore-to-camel-case: true #打开驼峰命名
-
