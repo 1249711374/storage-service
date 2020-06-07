@@ -270,20 +270,10 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
         String databasetype = dataSource.getDatabasetype();
         String username = dataSource.getUserName();
         String password = dataSource.getPassWord();
-//        password = new String(SecurityTools.decrypt(Base64.decode(password)));
         String url = dataSource.getUrl();
 //      8.0 版本
 //      String driveClass = "com.mysql.cj.jdbc.Driver";
         String driveClass = "com.mysql.jdbc.Driver";
-//        if("mysql".equalsIgnoreCase(databasetype)) {
-//            driveClass = DBUtil.mysqldriver;
-//        } else if("oracle".equalsIgnoreCase(databasetype)){
-//            driveClass = DBUtil.oracledriver;
-//        }  else if("sqlserver2000".equalsIgnoreCase(databasetype)){
-//            driveClass = DBUtil.sql2000driver;
-//        } else if("sqlserver".equalsIgnoreCase(databasetype)){
-//            driveClass = DBUtil.sql2005driver;
-//        }
         if(testDatasource(datasourceId,driveClass,url,username,password)) {
             boolean result = this.createDataSource(datasourceId, driveClass, url, username, password, databasetype);
             if(!result) {
