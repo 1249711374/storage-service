@@ -272,7 +272,9 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
         String password = dataSource.getPassWord();
 //        password = new String(SecurityTools.decrypt(Base64.decode(password)));
         String url = dataSource.getUrl();
-        String driveClass = "com.mysql.cj.jdbc.Driver";
+//      8.0 版本
+//      String driveClass = "com.mysql.cj.jdbc.Driver";
+        String driveClass = "com.mysql.jdbc.Driver";
 //        if("mysql".equalsIgnoreCase(databasetype)) {
 //            driveClass = DBUtil.mysqldriver;
 //        } else if("oracle".equalsIgnoreCase(databasetype)){
@@ -289,11 +291,6 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 //                throw new ADIException("数据源"+datasourceId+"配置正确，但是创建失败",500);
             }
         } else {
-            boolean result = this.createDataSource(datasourceId, driveClass, url, username, password, databasetype);
-            if(!result) {
-                log.error("数据源"+datasourceId+"配置正确，但是创建失败");
-//                throw new ADIException("数据源"+datasourceId+"配置正确，但是创建失败",500);
-            }
             log.error("数据源配置有错误");
 //            throw new ADIException("数据源配置有错误",500);
         }
