@@ -1,7 +1,10 @@
 package com.xiangzheng.storage.config.dbconfig;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.baomidou.mybatisplus.MybatisConfiguration;
 import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.type.JdbcType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -98,17 +101,43 @@ public class DruidDBConfig {
         Map<Object, Object> targetDataSources = new HashMap<Object, Object>();
         targetDataSources.put("adiDataSource", dataSource());
         dynamicDataSource.setTargetDataSources(targetDataSources);
+        /**
+         * 必须执行此操作，才会重新初始化AbstractRoutingDataSource 中的 resolvedDataSources，也只有这样，动态切换才会起效
+         */
+        dynamicDataSource.afterPropertiesSet();
         return dynamicDataSource;
     }
 
-    @Bean
-    public MybatisSqlSessionFactoryBean sqlSessionFactoryBean() throws Exception {
-        MybatisSqlSessionFactoryBean sessionFactory = new MybatisSqlSessionFactoryBean();
-        sessionFactory.setDataSource(dynamicDataSource());
-        //解决驼峰命名失效
-        sessionFactory.setConfiguration(configuration());
-        return sessionFactory;
+    @Bean("sqlSessionFactory")
+    public SqlSessionFactory sqlSessionFactory() throws Exception {
+        MybatisSqlSessionFactoryBean sqlSessionFactory = new MybatisSqlSessionFactoryBean();
+        sqlSessionFactory.setDataSource(dynamicDataSource());
+        //sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:/mapper/*/*Mapper.xml"));
+
+        MybatisConfiguration configuration = new MybatisConfiguration();
+        //configuration.setDefaultScriptingLanguage(MybatisXMLLanguageDriver.class);
+        configuration.setJdbcTypeForNull(JdbcType.NULL);
+        configuration.setMapUnderscoreToCamelCase(true);
+        configuration.setCacheEnabled(false);
+        sqlSessionFactory.setConfiguration(configuration);
+//        sqlSessionFactory.setPlugins(new Interceptor[]{ //PerformanceInterceptor(),OptimisticLockerInterceptor()
+//                paginationInterceptor() //添加分页功能
+//        });
+//        sqlSessionFactory.setGlobalConfig(globalConfiguration());
+        sqlSessionFactory.afterPropertiesSet();
+        return sqlSessionFactory.getObject();
     }
+
+
+
+//    @Bean
+//    public MybatisSqlSessionFactoryBean mybatisSqlSessionFactoryBean() throws Exception {
+//        MybatisSqlSessionFactoryBean sessionFactory = new MybatisSqlSessionFactoryBean();
+//            sessionFactory.setDataSource(dynamicDataSource());
+//        //解决驼峰命名失效
+//        sessionFactory.setConfiguration(configuration());
+//        return sessionFactory;
+//    }
 //    @Bean
 //    public SqlSessionTemplate sqlSessionTemplate() throws Exception {
 //        return new SqlSessionTemplate(sqlSessionFactoryBean());

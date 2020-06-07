@@ -58,7 +58,7 @@ public class DatasourceApplicationTests {
     @Test
     public void get(){
         List<DataSource> list=dataSourceMapper.get();
-        DataSource d = list.get(1);
+        DataSource d = list.get(0);
         //创建数据源
         try {
             dynamicDataSource.createDataSourceWithCheck(d);
@@ -70,7 +70,9 @@ public class DatasourceApplicationTests {
 //        List<User> list1=userMapper.get();
         List<Course> list2 = courseMapper.selectList(new EntityWrapper<>());
 //        list1.forEach(dataSource1 -> System.out.println(dataSource1.getUserName()));
-        list2.forEach(dataSource1 -> System.out.println(dataSource1.getName()));
+        for (Course course : list2) {
+            System.out.println(course.toString());
+        }
 
     }
 
